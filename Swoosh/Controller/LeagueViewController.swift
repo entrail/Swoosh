@@ -9,12 +9,14 @@
 import UIKit
 
 class LeagueViewController: UIViewController {
+    
+    @IBOutlet weak var nextBtn: BorderButton!
 
-  
+    var player: Player!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        player = Player()
     }
     
     @IBAction func onNextTapped(_ sender: Any) {
@@ -22,5 +24,29 @@ class LeagueViewController: UIViewController {
         
     }
     
-
+    @IBAction func onMensTapped(_ sender: Any) {
+        selectLeague(leagueType: "mens")
+    }
+    
+    @IBAction func onWomensTapped(_ sender: Any) {
+         selectLeague(leagueType: "womens")
+    }
+    
+    @IBAction func onCoedTapped(_ sender: Any) {
+         selectLeague(leagueType: "coed")
+    }
+    
+    func selectLeague(leagueType: String) {
+        player.desiredLeague = leagueType
+        nextBtn.isEnabled = true
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let skillViewController = segue.destination as? SkillViewController {
+            skillViewController.player = player
+        }
+    }
+    
+    
 }
